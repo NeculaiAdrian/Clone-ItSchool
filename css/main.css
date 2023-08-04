@@ -1,0 +1,292 @@
+/* Varaibiles */
+:root {
+  --text-primary: #101d42;
+  --text-secondary: #fbb44c;
+  --text-dark: #2b2922;
+  --text-light: #eaeaea;
+  --text-white: #ffffff;
+
+  --bg-primary: #141e4c;
+  --bg-secondary: #dfedf5;
+  --bg-dark: #101d42;
+  --bg-light: #ffffff;
+
+  --button-color: #2bb686;
+
+  --fs-large: 1rem;
+  --fs-medium: 0.875rem;
+  --fs-small: 0.75rem;
+
+  --spacing-xl: 2.625rem;
+  --spacing-large: 1.75rem;
+  --spacing-medium: 1rem;
+  --spacing-small: 0.5rem;
+  --spacing-tiny: 0.25rem;
+
+  --mobile-logo-height: 45px;
+}
+
+/* Reset default property*/
+* {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+}
+
+/* Reset styles added by default on mobile */
+input[type="submit"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 1;
+}
+
+/* Add property for fonts  */
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: var(--fs-medium);
+}
+
+/* Add property for colors*/
+h1 {
+  color: var(--text-light);
+}
+
+h2 {
+  color: var(--text-primary);
+}
+
+h3 {
+  color: var(--text-secondary);
+}
+
+p {
+  color: var(--text-dark);
+}
+
+/* Reused Classes*/
+.container {
+  max-width: 1200px;
+  min-width: 320px;
+
+  margin: auto;
+
+  padding: var(--spacing-medium);
+}
+
+/* Layout */
+body {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+/* Style Nav */
+nav {
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+
+  background-color: var(--bg-primary);
+
+  z-index: 2;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .logo-link {
+  padding: 0;
+}
+
+nav img {
+  width: auto;
+  height: 60px;
+}
+
+/* Menu + checbox needed for mobile version*/
+nav .menu-icon {
+  color: var(--text-light);
+  display: none;
+}
+
+nav input[type="checkbox"] {
+  display: none;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav li {
+  position: relative;
+}
+
+nav a {
+  font-size: var(--fs-small);
+  /* Text transform to only upper case*/
+  text-transform: uppercase;
+
+  color: var(--text-light);
+
+  padding: var(--spacing-medium);
+}
+
+nav .arrow-down-icon {
+  font-size: var(--fs-large);
+
+  /* If not specified top,left, right or bottom, the element will be positioned automaticaly, in this case it is how it is suposed to be. */
+  position: absolute;
+}
+
+nav a:hover {
+  color: var(--text-secondary);
+}
+
+nav .submenu {
+  /* Initialy, sumenu it is not show, it is done when you hover over parent */
+  display: none;
+
+  position: absolute;
+  top: calc(100% - var(--spacing-small));
+  left: var(--spacing-medium);
+
+  width: 10rem;
+  padding: var(--spacing-tiny) 0;
+
+  background-color: var(--bg-dark);
+
+  z-index: 3;
+}
+
+nav .submenu a {
+  padding: var(--spacing-tiny) var(--spacing-small);
+}
+
+/* Atention at this selector! display: block, it is used on element with class submenu, only when parent with class about us is hovered  */
+nav .about-us:hover .submenu {
+  display: block;
+}
+
+/* Style for mobile */
+@media (max-width: 768px) {
+  nav img {
+    height: var(--mobile-logo-height);
+  }
+
+  /* Hide links and display menu icon, with checkbox.
+   Hide submenu( we need JS to be made for mobile) and icon that show his present*/
+  nav ul {
+    display: none;
+  }
+
+  nav .menu-icon {
+    display: block;
+  }
+
+  nav .arrow-down-icon {
+    display: none;
+  }
+
+  nav .about-us:hover .submenu {
+    display: none;
+  }
+
+  nav .menu-icon-container {
+    position: relative;
+  }
+
+  /* New type of selector: we select input attribute type="checkbox" */
+
+  nav input[type="checkbox"] {
+    /* On mobile checkbox-ul must be on  */
+    display: block;
+
+    /* We put checkbox over menu icon */
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    /* Atention, opacity 0 only hide visual the element, it is present on the display*/
+    opacity: 0;
+
+    margin: 0;
+
+    /* Change display of cursor */
+    cursor: pointer;
+  }
+
+  /* Two new types of selector:
+    1. input:checked => element is styled only if checbox is checked .
+    2. input:checked ~ ul => apply CSS only on brothers -same level as his.  */
+  nav input[type="checkbox"]:checked ~ ul {
+    display: block;
+    width: 100%;
+
+    /* When we want position absolut on viewport, we use  position: fixed. Position: absolute it will be position relative comparing to first element, not what we want */
+    position: fixed;
+    /* Where is displayed extended menu on mobile? Under Nav. How we can calculate dimension of Nav? Dimension logo + padding */
+    top: calc(var(--mobile-logo-height) + 2 * var(--spacing-medium));
+    left: 0;
+
+    background-color: var(--bg-dark);
+  }
+  /* Footer */
+  footer {
+    background-color: var(--bg-dark);
+  }
+
+  footer p {
+    font-size: var(--fs-small);
+    text-align: center;
+
+    color: var(--text-light);
+
+    padding: var(--spacing-medium) 0;
+  }
+}
